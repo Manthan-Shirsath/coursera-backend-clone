@@ -1,23 +1,16 @@
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config();
+
 const Schema = mongoose.Schema;
 const objectid = mongoose.Schema.Types.ObjectId;
-mongoose.connect(process.env.MONGO_URI)
- .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-  });
+
 
 
 const UserSchema = new Schema({
-  Firstname : {
+  firstName : {
     type: String,
     required: true
   },
-  lastname : {
+  lastName : {
     type: String,
     required: true
   },
@@ -33,11 +26,11 @@ const UserSchema = new Schema({
 
 });
 const AdminSchema = new Schema({
-  Firstname : {
+  firstName : {
     type: String,
     required: true
   },
-  lastname : {
+  lastName : {
     type: String,
     required: true
   },
