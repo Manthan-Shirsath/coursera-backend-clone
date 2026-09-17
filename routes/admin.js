@@ -17,7 +17,7 @@ adminRouter.post('/login',async (req,res)=>{
     if(!isMatch){
         return res.status(401).send("Invalid credentials");
     }
-    const token = jwt.sign({email: email}, process.env.JWT_SECRET);
+    const token = jwt.sign({email: email}, process.env.ADMIN_JWT_SECRET);
     res.json({token: token});
 
 });
@@ -29,14 +29,25 @@ adminRouter.post('/signup',async(req,res)=>{
         email: email,
         password: hashPassword,
         firstName: firstName,
-        lastName: lastName  
+        lastName: lastName
     });
     await user.save();
     res.status(201).send("Admin created");
 });
 
-adminRouter.post('/create a course',async (req,res)=>{
-    res.send("create a course page");
+adminRouter.post('/course',adminMiddleware,async (req,res)=>{
+    const adminid = req.adminid;
+    const {title, description, price, imageLink, published} = req.body;
+    const course = new CourseModel({
+        title: title,
+        description: description,
+        price: price,
+        imageLink: imageLink,
+        createrid: adminid
+    });
+    await course.save();
+    res.status(201).send("Course created");
+
 });
 
 module.exports={

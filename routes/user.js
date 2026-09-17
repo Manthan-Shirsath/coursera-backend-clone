@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const {UserModel} = require('../db');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const userRouter = Router();
 
@@ -13,7 +14,7 @@ userRouter.post('/login', async (req, res) => {
     if (!isMatch) {
         return res.status(401).send("Invalid credentials");
     }
-    const token = jwt.sign({email: email}, process.env.JWT_SECRET);
+    const token = jwt.sign({email: email}, process.env.USER_JWT_SECRET);
     res.json({token: token});
 });
 
